@@ -23,7 +23,6 @@ from .models import Greeting
 #     return HttpResponse('Hello! ' * times)
 
 def index(request):
-	# api_key = os.environ.get('API_KEY')
 	 # input = request.POST
 	 # if input:
 	 # 	return HttpResponse("I have received your information!")
@@ -42,9 +41,9 @@ def index(request):
 
 
 def plotTimeSeries (symbol,features):
-    
+    key = os.environ.get('API_KEY')
     #recieve data by an API in pandas format
-    ts = TimeSeries(key='D5RXEJT6U9CLB7QR', output_format='pandas')
+    ts = TimeSeries(key=key, output_format='pandas')
     
     def timeseries_symbol(symbol):
         data, meta_data = ts.get_intraday(symbol=symbol , interval='60min', outputsize='full')
