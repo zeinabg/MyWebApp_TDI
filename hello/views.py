@@ -45,11 +45,13 @@ def plotTimeSeries (symbol,features):
     
     #recieve data by an API in pandas format
     ts = TimeSeries(key='D5RXEJT6U9CLB7QR', output_format='pandas')
-    
+
     def timeseries_symbol(symbol):
         data, meta_data = ts.get_intraday(symbol=symbol , interval='60min', outputsize='full')
         return data
+    data = timeseries_symbol(symbol)
     data.reset_index(inplace= True)
+    
     
     # prepare data for plot
     x = data['date']
@@ -68,13 +70,13 @@ def plotTimeSeries (symbol,features):
     )
 
     # add some renderers
-    if features[0]:
+    if 'open' in features:
         p.line(x, y0, legend_label="open", line_color="blue", line_dash="4 4")
-    if features[1]:
+    if 'high' in features:
         p.line(x, y1, legend_label="high", line_color="red")
-    if features[2]:
+    if 'low' in features:
         p.line(x, y2, legend_label="low", line_color="black")
-    if features[3]:
+    if 'close' in features:
         p.line(x, y2, legend_label="close", line_color="green")
 
 
