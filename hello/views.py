@@ -5,8 +5,9 @@ from django.http import HttpResponse
 
 from alpha_vantage.timeseries import TimeSeries
 import pandas as pd
-from bokeh.io import output_file, show
 from bokeh.plotting import figure, output_file, show
+from bokeh.embed import file_html
+from bokeh.resources import CDN
 
 from .models import Greeting
 
@@ -65,7 +66,7 @@ def plotTimeSeries (symbol,features):
 
     # create a new plot
     p = figure(
-       tools="pan,box_zoom,reset,save", title="Intraday Times Series for ... Stock",
+       tools="pan,box_zoom,reset,save", title="Intraday Times Series for %s" % symbol,
        x_axis_label='date', x_axis_type = 'datetime', plot_width=800
     )
 
@@ -81,7 +82,7 @@ def plotTimeSeries (symbol,features):
 
 
     # show the results
-    return show(p)
+    return file_html(p, CDN)
 
 def plot(request):
 	symbol = request.GET.get('symbol')
