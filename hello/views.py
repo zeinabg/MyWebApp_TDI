@@ -36,7 +36,7 @@ def index(request):
 		""")
 
 def plot(request):
-	return HttpResponse(str(request.GET))
+	return HttpResponse("I have received your information")
 
 
 def db(request):
