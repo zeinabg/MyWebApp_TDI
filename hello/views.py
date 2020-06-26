@@ -30,7 +30,7 @@ def index(request):
 	 # 	return HttpResponse("I have received your information!")
 	return HttpResponse("""
 <form id='input' method='get' action='plot'>	
-          <p>Ticker symbol: <input type='text' name='symbol' placeholder='GOOG' /></p>
+          <p>Ticker symbol: <input type='text' name='symbol' placeholder='AAPL' /></p>
           <p>
           <input type="checkbox" name='features' value='open' />Opening price<br>
           <input type="checkbox" name='features' value='high' />High price<br>
@@ -42,13 +42,15 @@ def index(request):
 		""")
 
 
+
 def plotTimeSeries (symbol,features):
     
-    #recieve data by an API in pandas format
+    #recieve data by Alpha Vantage API in pandas format
+    
     ts = TimeSeries(key='D5RXEJT6U9CLB7QR', output_format='pandas')
 
     def timeseries_symbol(symbol):
-        data, meta_data = ts.get_intraday(symbol=symbol , interval='60min', outputsize='full')
+        data, meta_data = ts.get_daily(symbol=symbol , outputsize='compact')
         return data
     data = timeseries_symbol(symbol)
     data.reset_index(inplace= True)
@@ -66,8 +68,8 @@ def plotTimeSeries (symbol,features):
 
     # create a new plot
     p = figure(
-       tools="pan,box_zoom,reset,save", title="Intraday Times Series for %s" % symbol,
-       x_axis_label='date', x_axis_type = 'datetime', plot_width=800
+       tools="pan,box_zoom,reset,save", title="Alpha Vantage Daily Prices for %s (last 100 days)" % symbol,
+       x_axis_label='date', x_axis_type = 'datetime', plot_width=650
     )
 
     # add some renderers
@@ -83,6 +85,7 @@ def plotTimeSeries (symbol,features):
 
     # show the results
     return file_html(p, CDN)
+
 
 def plot(request):
 	symbol = request.GET.get('symbol')
