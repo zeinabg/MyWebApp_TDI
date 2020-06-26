@@ -24,7 +24,7 @@ def index(request):
 	 # 	return HttpResponse("I have received your information!")
 	return HttpResponse("""
 <form id='input' method='get' action='plot'>	
-          <p>Ticker symbol: <input type='text' name='ticker' placeholder='GOOG' /></p>
+          <p>Ticker symbol: <input type='text' name='symbol' placeholder='GOOG' /></p>
           <p>
           <input type="checkbox" name='features' value='close' />Closing price<br>
           <input type="checkbox" name='features' value='adj_close' />Adjusted closing price<br>
@@ -36,7 +36,9 @@ def index(request):
 		""")
 
 def plot(request):
-	return HttpResponse("I have received your information")
+	symbol = request.GET.get('symbol')
+	features = request.GET.get('features')
+	return HttpResponse("I have received your information: {} {}".format(symbol, features))
 
 
 def db(request):
