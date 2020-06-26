@@ -38,7 +38,7 @@ def index(request):
 def plot(request):
 	symbol = request.GET.get('symbol')
 	features = request.GET.get('features')
-	return HttpResponse("I have received your information: {} {}".format(symbol, features))
+	return HttpResponse("I have received your information: {} {}".format(type(request.GET), dir(request.GET)))
 
 
 def db(request):
