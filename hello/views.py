@@ -18,7 +18,10 @@ from .models import Greeting
 #     return HttpResponse('Hello! ' * times)
 
 def index(request):
-	api_key = os.environ.get('API_KEY')
+	# api_key = os.environ.get('API_KEY')
+	 input = request.forms.get('input')
+	 if input:
+	 	return HttpResponse(str(input))
 	return HttpResponse("""
 <form id='input' method='post' action='index'>	
           <p>Ticker symbol: <input type='text' name='ticker' placeholder='GOOG' /></p>
