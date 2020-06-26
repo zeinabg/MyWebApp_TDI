@@ -19,7 +19,7 @@ from .models import Greeting
 
 def index(request):
 	# api_key = os.environ.get('API_KEY')
-	 input = request.forms.get('input', '')
+	 input = request.POST
 	 if input:
 	 	return HttpResponse(str(input))
 	return HttpResponse("""
