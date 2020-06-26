@@ -23,7 +23,7 @@ def index(request):
 	 # if input:
 	 # 	return HttpResponse("I have received your information!")
 	return HttpResponse("""
-<form id='input' method='post' action='index'>	
+<form id='input' method='post' action='plot'>	
           <p>Ticker symbol: <input type='text' name='ticker' placeholder='GOOG' /></p>
           <p>
           <input type="checkbox" name='features' value='close' />Closing price<br>
@@ -34,6 +34,10 @@ def index(request):
           <p><input type="submit" value="Submit"></p>
           </form>
 		""")
+
+def plot(request):
+	return HttpResponse(str(request.POST))
+
 
 def db(request):
 
