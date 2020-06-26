@@ -1,4 +1,4 @@
-alpha_vantage pandas
+alpha_vantage
 django
 gunicorn
 django-heroku
