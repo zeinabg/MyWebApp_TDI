@@ -3,6 +3,11 @@ import requests
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from alpha_vantage.timeseries import TimeSeries
+import pandas as pd
+from bokeh.io import output_file, show
+from bokeh.plotting import figure, output_file, show
+
 from .models import Greeting
 
 # Create your views here.
