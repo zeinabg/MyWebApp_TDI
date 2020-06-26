@@ -13,9 +13,19 @@ from .models import Greeting
 #     r = requests.get('http://httpbin.org/status/418')
 #     print(r.text)
 #     return HttpResponse('<pre>' + r.text + '</pre>')
+# def index(request):
+#     times = int(os.environ.get('TIMES',3))
+#     return HttpResponse('Hello! ' * times)
+
 def index(request):
-    times = int(os.environ.get('TIMES',3))
-    return HttpResponse('Hello! ' * times)
+	api_key = os.environ.get('API_KEY')
+	return HttpResponse("""
+		<form action="" method="post">
+<label for="GET-name">Name:</label>
+<input id="GET-name" type="text" name="name">
+<input type="submit" value="Save">
+</form>
+		""")
 
 def db(request):
 
