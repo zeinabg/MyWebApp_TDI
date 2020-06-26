@@ -21,7 +21,7 @@ def index(request):
 	# api_key = os.environ.get('API_KEY')
 	 input = request.POST
 	 if input:
-	 	return HttpResponse(str(input))
+	 	return HttpResponse("I have received your information!")
 	return HttpResponse("""
 <form id='input' method='post' action='index'>	
           <p>Ticker symbol: <input type='text' name='ticker' placeholder='GOOG' /></p>
