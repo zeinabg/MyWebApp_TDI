@@ -1,5 +1,6 @@
 alpha_vantage
 pandas
+bokeh
 django
 gunicorn
 django-heroku
