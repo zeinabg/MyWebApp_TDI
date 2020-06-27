@@ -15,7 +15,7 @@ from .models import Greeting
 
 def index(request):
 	key = os.environ.get('API_KEY')
-	html = get_template("layout_plot.html").render({"body": """
+	form_html = get_template("layout_plot.html").render({"body": """
 <h2>Get your stock price time-series</h2>
 
 <form id="input" action="plot" method="get">
@@ -24,7 +24,7 @@ def index(request):
 <p style="padding-left: 30px;"><input type="submit" value="Submit" /></p>
 </form>
 		"""})
-	return HttpResponse(html)
+	return HttpResponse(layout(form_html))
 	# return render(request, "form.html")
 
 
@@ -32,8 +32,8 @@ def plot(request):
 	symbol = request.GET.get('symbol')
 	features = request.GET.getlist('features')
 	plot_html = plotTimeSeries (symbol,features)
-	html = get_template("layout_plot.html").render({"body": plot_html })
-	return HttpResponse(html)
+	# html = get_template("layout_plot.html").render({"body": plot_html })
+	return HttpResponse(layout(plot_html))
 
 
 def plotTimeSeries (symbol,features):
@@ -76,3 +76,59 @@ def plotTimeSeries (symbol,features):
     # show the results
     return file_html(p, CDN)
 
+def layout(body):
+	return """
+<!DOCTYPE html>
+<html>
+<head>
+<style> 
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+</style>
+</head>
+<body>
+<ul>
+  <li><a class="active" href="#home">Ticker Lookup</a></li>
+  <li><a href="https://github.com/zeinabg/MyWebApp_TDI">GitHub</a></li>
+</ul>
+ {}
+</body>
+
+</html>
+
+	""".format(body)
