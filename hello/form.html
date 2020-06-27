@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
+<style> 
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -32,31 +42,12 @@ li a:hover:not(.active) {
 </style>
 </head>
 <body>
-
 <ul>
   <li><a class="active" href="#home">Ticker Lookup</a></li>
   <li><a href="https://github.com/zeinabg/MyWebApp_TDI">GitHub</a></li>
 
 </ul>
 
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-<style> 
-input[type=button], input[type=submit], input[type=reset] {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-</style>
-</head>
-<body>
 <h2>Get your stock price time-series</h2>
 
 <form id="input" action="plot" method="get">
