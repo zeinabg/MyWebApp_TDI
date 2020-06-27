@@ -59,7 +59,7 @@ def plotTimeSeries (symbol,features):
         p.line(x, y2, legend_label="close", line_color="green")
 	
 	# create layout 
-    file = codecs.open("layout_plot.html", "r", "utf-8")
+    file = codecs.open("/app/templates/layout_plot.html", "r", "utf-8")
     layout = ''.join(file)
     
     # show the results
