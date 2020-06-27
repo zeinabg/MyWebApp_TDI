@@ -126,9 +126,9 @@ li a:hover:not(.active) {
   <li><a class="active" href="#home">Ticker Lookup</a></li>
   <li><a href="https://github.com/zeinabg/MyWebApp_TDI">GitHub</a></li>
 </ul>
- {}
+ %s
 </body>
 
 </html>
 
-	""".format(body)
+	""" % body
