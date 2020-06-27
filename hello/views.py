@@ -2,51 +2,28 @@ import os
 import requests
 from django.shortcuts import render
 from django.http import HttpResponse
-
 from alpha_vantage.timeseries import TimeSeries
 import pandas as pd
 from bokeh.plotting import figure, output_file, show
 from bokeh.embed import file_html
 from bokeh.resources import CDN
-
 from .models import Greeting
 
-# Create your views here.
-# def index(request):
-#     # return HttpResponse('Hello from Python!')
-#     return render(request, "index.html")
-# def index(request):
-#     r = requests.get('http://httpbin.org/status/418')
-#     print(r.text)
-#     return HttpResponse('<pre>' + r.text + '</pre>')
-# def index(request):
-#     times = int(os.environ.get('TIMES',3))
-#     return HttpResponse('Hello! ' * times)
 
 def index(request):
 	key = os.environ.get('API_KEY')
-	 # input = request.POST
-	 # if input:
-	 # 	return HttpResponse("I have received your information!")
-	return HttpResponse("""
-<form id='input' method='get' action='plot'>	
-          <p>Ticker symbol: <input type='text' name='symbol' placeholder='AAPL' /></p>
-          <p>
-          <input type="checkbox" name='features' value='open' />Opening price<br>
-          <input type="checkbox" name='features' value='high' />High price<br>
-          <input type="checkbox" name='features' value='low' />Low price<br>
-          <input type="checkbox" name='features' value='close' />Closing price<br>
-          </p>
-          <p><input type="submit" value="Submit"></p>
-          </form>
-		""")
+	return render(request, "form.html")
 
+
+def plot(request):
+	symbol = request.GET.get('symbol')
+	features = request.GET.getlist('features')
+	return HttpResponse(plotTimeSeries (symbol,features))
 
 
 def plotTimeSeries (symbol,features):
-    
-    #recieve data by Alpha Vantage API in pandas format
-    
+	
+    # recieve data by Alpha Vantage API in pandas format
     ts = TimeSeries(key='D5RXEJT6U9CLB7QR', output_format='pandas')
 
     def timeseries_symbol(symbol):
@@ -54,8 +31,7 @@ def plotTimeSeries (symbol,features):
         return data
     data = timeseries_symbol(symbol)
     data.reset_index(inplace= True)
-    
-    
+        
     # prepare data for plot
     x = data['date']
     y0 = data['1. open']
@@ -82,22 +58,6 @@ def plotTimeSeries (symbol,features):
     if 'close' in features:
         p.line(x, y2, legend_label="close", line_color="green")
 
-
     # show the results
     return file_html(p, CDN)
 
-
-def plot(request):
-	symbol = request.GET.get('symbol')
-	features = request.GET.getlist('features')
-	return HttpResponse(plotTimeSeries (symbol,features))
-
-
-def db(request):
-
-    greeting = Greeting()
-    greeting.save()
-
-    greetings = Greeting.objects.all()
-
-    return render(request, "db.html", {"greetings": greetings})
