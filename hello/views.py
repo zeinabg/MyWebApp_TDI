@@ -8,7 +8,7 @@ from bokeh.plotting import figure, output_file, show
 from bokeh.embed import file_html
 from bokeh.resources import CDN
 from .models import Greeting
-
+import codecs
 
 def index(request):
 	key = os.environ.get('API_KEY')
@@ -57,7 +57,11 @@ def plotTimeSeries (symbol,features):
         p.line(x, y2, legend_label="low", line_color="black")
     if 'close' in features:
         p.line(x, y2, legend_label="close", line_color="green")
-
+	
+	# create layout 
+    file = codecs.open("layout_plot.html", "r", "utf-8")
+    layout = ''.join(file)
+    
     # show the results
-    return file_html(p, CDN)
+    return layout.join(file_html(p, CDN))
 
