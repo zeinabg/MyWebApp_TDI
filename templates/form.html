@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style> 
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+</style>
+</head>
+<body>
+<ul>
+  <li><a class="active" href="#home">Ticker Lookup</a></li>
+  <li><a href="https://github.com/zeinabg/MyWebApp_TDI">GitHub</a></li>
+
+</ul>
+
+<h2>Get your stock price time-series</h2>
+
+<form id="input" action="plot" method="get">
+<p style="padding-left: 30px;">Ticker symbol: <input name="symbol" type="text" placeholder="AAPL" /></p>
+<p style="padding-left: 30px;"><input name="features" type="checkbox" value="open" />Opening price<br /> <input name="features" type="checkbox" value="high" />High price<br /> <input name="features" type="checkbox" value="low" />Low price<br /> <input name="features" type="checkbox" value="close" />Closing price</p>
+<p style="padding-left: 30px;"><input type="submit" value="Submit" /></p>
+</form>
+
+</body>
+
+</html>
