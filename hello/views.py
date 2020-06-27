@@ -123,7 +123,7 @@ li a:hover:not(.active) {
 </head>
 <body>
 <ul>
-  <li><a class="active" href="#home">Ticker Lookup</a></li>
+  <li><a class="active" href="https://zeinab-tdi-project.herokuapp.com/">Ticker Lookup</a></li>
   <li><a href="https://github.com/zeinabg/MyWebApp_TDI">GitHub</a></li>
 </ul>
  %s
