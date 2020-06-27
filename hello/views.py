@@ -15,7 +15,7 @@ from .models import Greeting
 
 def index(request):
 	key = os.environ.get('API_KEY')
-	html = get_template("layout_plot.html").render(Context({"body": """
+	html = get_template("layout_plot.html").render({"body": """
 <h2>Get your stock price time-series</h2>
 
 <form id="input" action="plot" method="get">
@@ -23,7 +23,7 @@ def index(request):
 <p style="padding-left: 30px;"><input name="features" type="checkbox" value="open" />Opening price<br /> <input name="features" type="checkbox" value="high" />High price<br /> <input name="features" type="checkbox" value="low" />Low price<br /> <input name="features" type="checkbox" value="close" />Closing price</p>
 <p style="padding-left: 30px;"><input type="submit" value="Submit" /></p>
 </form>
-		"""}))
+		"""})
 	return HttpResponse(html)
 	# return render(request, "form.html")
 
@@ -32,7 +32,7 @@ def plot(request):
 	symbol = request.GET.get('symbol')
 	features = request.GET.getlist('features')
 	plot_html = plotTimeSeries (symbol,features)
-	html = get_template("layout_plot.html").render(Context({"body": plot_html }))
+	html = get_template("layout_plot.html").render({"body": plot_html })
 	return HttpResponse(html)
 
 
