@@ -18,5 +18,4 @@ urlpatterns = [
     path("", hello.views.index, name="index"),
     path("plot", hello.views.plot, name="plot"),
     path("admin/", admin.site.urls),
-    path('', include("zeinab-tdi-project.urls")),
 ]

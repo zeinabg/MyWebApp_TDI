@@ -22,7 +22,7 @@ def plot(request):
 
 
 def plotTimeSeries (symbol,features):
-	
+
     # recieve data by Alpha Vantage API in pandas format
     ts = TimeSeries(key='D5RXEJT6U9CLB7QR', output_format='pandas')
 
