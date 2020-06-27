@@ -1,6 +1,5 @@
 import os
 import requests
-# from django.shortcuts import render
 from django.template.loader import get_template
 from django.template import Context
 from django.http import HttpResponse
@@ -25,14 +24,11 @@ def index(request):
 </form>
 		"""
 	return HttpResponse(layout(form_html))
-	# return render(request, "form.html")
-
 
 def plot(request):
 	symbol = request.GET.get('symbol')
 	features = request.GET.getlist('features')
 	plot_html = plotTimeSeries (symbol,features)
-	# html = get_template("layout_plot.html").render({"body": plot_html })
 	return HttpResponse(layout(plot_html))
 
 
