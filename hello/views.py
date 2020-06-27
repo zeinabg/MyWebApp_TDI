@@ -1,6 +1,10 @@
 import os
 import requests
-from django.shortcuts import render
+# from django.shortcuts import render
+from django.template.loader import get_template
+from django.template import Context
+from django.http import HttpResponse
+
 from django.http import HttpResponse
 from alpha_vantage.timeseries import TimeSeries
 import pandas as pd
@@ -8,17 +12,28 @@ from bokeh.plotting import figure, output_file, show
 from bokeh.embed import file_html
 from bokeh.resources import CDN
 from .models import Greeting
-import codecs
 
 def index(request):
 	key = os.environ.get('API_KEY')
-	return render(request, "form.html")
+	html = get_template("layout_plot.html").render(Context({"body": """
+<h2>Get your stock price time-series</h2>
+
+<form id="input" action="plot" method="get">
+<p style="padding-left: 30px;">Ticker symbol: <input name="symbol" type="text" placeholder="AAPL" /></p>
+<p style="padding-left: 30px;"><input name="features" type="checkbox" value="open" />Opening price<br /> <input name="features" type="checkbox" value="high" />High price<br /> <input name="features" type="checkbox" value="low" />Low price<br /> <input name="features" type="checkbox" value="close" />Closing price</p>
+<p style="padding-left: 30px;"><input type="submit" value="Submit" /></p>
+</form>
+		"""}))
+	return HttpResponse(html)
+	# return render(request, "form.html")
 
 
 def plot(request):
 	symbol = request.GET.get('symbol')
 	features = request.GET.getlist('features')
-	return HttpResponse(plotTimeSeries (symbol,features))
+	plot_html = plotTimeSeries (symbol,features)
+	html = get_template("layout_plot.html").render(Context({"body": plot_html }))
+	return HttpResponse(html)
 
 
 def plotTimeSeries (symbol,features):
@@ -58,10 +73,6 @@ def plotTimeSeries (symbol,features):
     if 'close' in features:
         p.line(x, y2, legend_label="close", line_color="green")
 	
-	# create layout 
-    file = codecs.open("/app/templates/layout_plot.html", "r", "utf-8")
-    layout = ''.join(file)
-    
     # show the results
-    return layout.join(file_html(p, CDN))
+    return file_html(p, CDN)
 
